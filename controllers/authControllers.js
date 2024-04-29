@@ -33,6 +33,24 @@ class authControllers {
       return res.status(500).json({ message: error.message });
     }
   };
+
+  // get user
+  getUser = async (req, res) => {
+    const { id, role } = req;
+
+    try {
+      if (role === "admin") {
+        const user = await adminModel.findById(id);
+        return res.status(200).json({ userInfo: user });
+      } else {
+        console.log("seller");
+        // const seller = await sellerModel.findById(id);
+        // responseReturn(res, 200, { userInfo: seller });
+      }
+    } catch (error) {
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+  }; // End getUser Method
 }
 
 module.exports = new authControllers();

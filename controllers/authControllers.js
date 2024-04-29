@@ -12,13 +12,13 @@ class authControllers {
       const admin = await adminModel.findOne({ email }).select("+password");
       // console.log(admin);
       if (!admin) {
-        return res.status(404).json({ message: "Wrong Email" });
+        return res.status(404).json({ message: "Email not found" });
       }
 
       const match = await bcrpty.compare(password, admin.password);
       console.log(match);
       if (!match) {
-        return res.status(401).json({ message: "Wrong Password" });
+        return res.status(401).json({ message: "Password incorrect" });
       } else {
         const token = await createToken.createToken({
           id: admin.id,
